@@ -1,0 +1,23 @@
+@import '../assets/scss/helper/_variables';
+
+.hero{
+    background-color:$blue;
+    padding-bottom:28px;
+}
+
+:host /deep/ intro{
+    max-width:411px;
+    display:block;
+    font-size:20px;
+    color:white;
+    padding-bottom: 50px;
+    padding-top:50px;
+    line-height:1.5;
+
+    >*:first-child{
+        margin-top:0;
+    }
+    >*:last-child{
+        margin-bottom:0;
+    }
+}

@@ -1,0 +1,54 @@
+@import '../assets/scss/helper/_variables';
+
+.search-games{
+	width:100%;
+    position:relative;
+
+	&__input{
+		border: none;
+        padding: 5px 15px;
+        outline: 0;
+        background-color: white;        
+        width: 100%;
+        color:$main;
+        border-bottom: 1px solid $main;
+        max-width: 270px;
+        font-size:15px;
+        box-sizing:border-box;
+        border-radius: 16px;
+
+		@include placeholder {
+			color: rgba($main,0.5);
+		}
+	}
+
+    &__list{
+        max-width: 270px;
+        margin: 0 auto;
+        text-align: left;
+        padding: 12px 15px;
+        background-color: $white;
+        list-style-type: none;
+        max-height: 350px;
+        overflow: auto;
+        border:1px solid #e6e6e6;
+        border-radius:3px;
+        font-size:15px;
+        box-shadow:5px 5px 10px rgba(100,100,100,.33);
+        position:absolute;
+        top: calc(100% + 10px);
+        left:0;
+        width:100%;
+        z-index:1;
+
+        &-item{
+            padding: 8px 0;
+            color:rgba($blue, .5);            
+            cursor:pointer;
+
+            &:hover{
+                color:$blue;
+            }
+        }
+    }
+}
