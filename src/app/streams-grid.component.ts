@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 
 import { StreamRunnerComponent } from './stream-runner.component';
 
@@ -24,13 +24,36 @@ import { StreamRunnerComponent } from './stream-runner.component';
 					<stream-runner
 						*ngIf="runner.stream"
 						[streamsType]="streamsType"
-						[runner]="runner"></stream-runner>					
+						[runner]="runner"
+						[@flyInOut]="'in'"></stream-runner>					
 				</li>
 			</ul>
 		</div>
 	</div>
 	`,
 	styleUrls: ['runners.scss'],
+	animations: [
+		trigger('flyInOut', [
+			state('in',
+				style({
+					transform: 'translateY(0)',
+					opacity: '1',
+				})),
+			transition('void => *', [
+				style({
+					transform: 'translateY(-10%)',
+					opacity: '0',
+				}),
+				animate(100)
+			]),
+			transition('* => void', [
+				animate(100, style({
+					transform: 'translateY(10%)',
+					opacity: '0'
+				}))
+			])
+		])
+	]
 })
 
 export class StreamsGridComponent implements OnInit {

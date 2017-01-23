@@ -57,6 +57,10 @@
     }
 }
 
+:host /deep/ stream-runner{
+    display:block;
+}
+
 .runner-stream{
     color:$black;
     margin-bottom:1.5rem;

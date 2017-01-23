@@ -37,7 +37,7 @@ import { Component, OnInit, Input } from '@angular/core';
 		</div>
 	</article>
 	`,
-	styleUrls: ['runners.scss'],
+	styleUrls: ['runners.scss'],	
 })
 
 export class StreamRunnerComponent implements OnInit {
