@@ -11,7 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 		}">
 		<img
 			*ngIf="runner.stream?.preview?.medium"
-			[src]="runner.stream.preview.medium | safeUrl"
+			[src]="runner.stream.preview.medium | safeResourceUrl"
 			alt=""
 			class="runner-stream__image"
 			(click)="setStream(runner.name)" />

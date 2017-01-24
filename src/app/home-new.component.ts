@@ -39,7 +39,7 @@ import { Observable } from 'rxjs/Observable';
 
 	<iframe 
 		*ngIf="streamFullUrl"
-		[src]="streamFullUrl | safeUrl"
+		[src]="streamFullUrl | safeResourceUrl"
         height="720" 
         width="1280" 
         frameborder="0" 
@@ -51,7 +51,7 @@ import { Observable } from 'rxjs/Observable';
     	frameborder="0" 
         scrolling="no" 
         id="chat_embed" 
-        [src]="chatFullUrl | safeUrl" 
+        [src]="chatFullUrl | safeResourceUrl" 
         height="500" 
         width="1280">
 	</iframe>

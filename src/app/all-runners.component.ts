@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
 	selector: 'all-runners',
@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 			<h2 class="small-title runners__title">All runners</h2>
 
 			<ul class="runners__list">
-				<li class="runners__list-item" *ngFor="let runner of runners">
+				<li [@showUp]="'shown'" class="runners__list-item" *ngFor="let runner of runners">
 					{{ runner.name }}
 				</li>
 			</ul>
@@ -16,6 +16,28 @@ import { Component, Input } from '@angular/core';
 	</div>
 	`,
 	styleUrls: ['runners.scss'],
+	animations: [
+		trigger('showUp', [
+			state('shown',
+				style({
+					transform: 'translateY(0)',
+					opacity: '1',
+				})
+			),
+			transition('void => *', [
+				style({
+					transform: 'translateY(-10%)',
+					opacity: '0',
+				}),
+				animate(100)
+			]),
+			transition('* => void', [
+				animate(100, style({
+					transform: 'translateY(10%)',
+					opacity: '0'
+				}))
+			])
+		])]
 })
 
 export class AllRunnersComponent {

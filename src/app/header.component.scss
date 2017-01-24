@@ -1,0 +1,18 @@
+@import '../assets/scss/helper/_variables';
+
+.header{
+	color:white;
+	padding-top:1.5rem;
+	padding-bottom:1.5rem;
+	position:fixed;
+	left:0;
+	right:0;
+
+	&__logo{
+		font-weight:$fw-light;
+		font-size:.75rem;
+		letter-spacing:.15em;
+		line-height:1;
+		text-transform: uppercase;
+	}
+}

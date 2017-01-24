@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeNewComponent } from './home-new.component';
+import { HeaderComponent } from './header.component';
+import { FooterComponent } from './footer.component';
 import { SearchGamesComponent } from './search-games.component';
 import { IntroComponent } from './intro.component';
 import { StreamsGridComponent } from './streams-grid.component';
@@ -16,20 +18,26 @@ import { SpeedrunService } from './speedrun.service';
 import { TwitchService } from './twitch.service';
 import { RunnersService } from './runners.service';
 
+import { SafeResourceUrlPipe } from './safe-resource-url.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { SafeStylePipe } from './safe-style.pipe';
+import { MailtoPipe } from './mailto.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeNewComponent,
+    HeaderComponent,
+    FooterComponent,
     SearchGamesComponent,
     IntroComponent,
     StreamsGridComponent,
     StreamRunnerComponent,
     AllRunnersComponent,
-    SafeUrlPipe,
-    SafeStylePipe
+    SafeResourceUrlPipe,
+    SafeStylePipe,
+    MailtoPipe,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,

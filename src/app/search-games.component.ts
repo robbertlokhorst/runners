@@ -25,7 +25,11 @@ import 'rxjs/add/operator/distinctUntilChanged';
 		(focus)="toggleGamesListState()"
 		(blur)="toggleGamesListState()" />
 		
-		<ul [@listState]="gamesListState" *ngIf="games && gamesList" class="search-games__list">
+		<ul
+			[@listState]="gamesListState"
+			(@listState.done)="gamesListState"
+			*ngIf="games && gamesList"
+			class="search-games__list">
 			<li (click)="infoGame(game)" class="search-games__list-item" *ngFor="let game of games">
 				{{ game.names.international }}
 			</li>
@@ -80,10 +84,11 @@ export class SearchGamesComponent implements OnInit{
 		//Change it the other way around because we'll set the gamesList after this
 		this.gamesListState = this.gamesList ? 'inactive' : 'active';
 		//Give it a delay so that the [@gamesListState] animation can finish
+
 		let that = this;
 		setTimeout( function(){
 			that.gamesList = !that.gamesList;
-		}, 200);		
+		}, 200);	
 	}
 	
 	private onSearchType(value: string) {
