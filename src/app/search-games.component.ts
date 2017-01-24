@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, trigger, state, style, transition, animate } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { SpeedrunService } from './speedrun.service';
@@ -22,9 +22,10 @@ import 'rxjs/add/operator/distinctUntilChanged';
 		[(ngModel)]="searchBoxValue" [value]="searchBoxValue"
 		#searchBox="ngModel" name="searchBox"
 		(keyup)="onSearchType($event.target.value)"
-		(focus)="showGamesList = !showGamesList" />
+		(focus)="toggleGamesListState()"
+		(blur)="toggleGamesListState()" />
 		
-		<ul *ngIf="games && showGamesList" class="search-games__list">
+		<ul [@listState]="gamesListState" *ngIf="games && gamesList" class="search-games__list">
 			<li (click)="infoGame(game)" class="search-games__list-item" *ngFor="let game of games">
 				{{ game.names.international }}
 			</li>
@@ -32,6 +33,20 @@ import 'rxjs/add/operator/distinctUntilChanged';
 	</form>
 	`,
 	styleUrls: ['search-games.component.scss'],
+	animations: [
+		trigger('listState', [
+			state('inactive', style({
+				transform: 'scale(.95) translateY(-8px)',
+				opacity: '0',
+			})),
+			state('active',   style({
+				transform: 'scale(1) translateY(0px)',
+				opacity: '1',
+			})),
+			transition('inactive => active', animate('200ms ease-in')),
+			transition('active => inactive', animate('200ms ease-out'))
+		])
+	]
 })
 
 export class SearchGamesComponent implements OnInit{
@@ -40,7 +55,8 @@ export class SearchGamesComponent implements OnInit{
 
 	searchBoxValue: string = "";
 	games: any;
-	showGamesList: Boolean = false;
+	gamesList: Boolean = false;
+	gamesListState: string = "inactive";
 	private searchUpdated: Subject<string> = new Subject<string>();
 
 	constructor(private speedrunService: SpeedrunService, private runnersService: RunnersService, private twitchService: TwitchService){ }
@@ -58,6 +74,16 @@ export class SearchGamesComponent implements OnInit{
 	        			this.games = games.data;
 	        		});
 	        });
+	}
+
+	public toggleGamesListState(){		
+		//Change it the other way around because we'll set the gamesList after this
+		this.gamesListState = this.gamesList ? 'inactive' : 'active';
+		//Give it a delay so that the [@gamesListState] animation can finish
+		let that = this;
+		setTimeout( function(){
+			that.gamesList = !that.gamesList;
+		}, 200);		
 	}
 	
 	private onSearchType(value: string) {
@@ -87,7 +113,6 @@ export class SearchGamesComponent implements OnInit{
 		//Set searchbox value to the game the user just clicked
 		//Including capitals and all
 		this.searchBoxValue = gameName;
-		this.showGamesList = !this.showGamesList;
 
 		this.speedrunService.getRuns(gameId, 100)
 			.subscribe( (runs: any) => {
