@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 export class RunnersService {
     allRunnersUpdated:EventEmitter<any> = new EventEmitter();
     onlineRunnersUpdated:EventEmitter<any> = new EventEmitter();
+    streamUpdated:EventEmitter<any> = new EventEmitter();
     private allRunners: any = [];
     private onlineRunners: any = [];
 
@@ -32,5 +33,10 @@ export class RunnersService {
     setOnlineRunners(data:any){
         this.onlineRunners.push(data);
         this.onlineRunnersUpdated.emit(this.onlineRunners);
+    }
+
+    setStream(player: string){
+        let urlBegin = "http://player.twitch.tv/?channel=";
+        this.streamUpdated.emit(urlBegin + player);
     }
 }

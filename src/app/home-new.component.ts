@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { SearchGamesComponent } from './search-games.component';
 import { StreamsGridComponent } from './streams-grid.component';
+import { StreamComponent } from './stream.component';
 
 import { SpeedrunService } from './speedrun.service';
 import { TwitchService } from './twitch.service';
@@ -35,34 +36,18 @@ import { Observable } from 'rxjs/Observable';
 	<template [ngIf]="allRunners && allRunners.length > 0">
 		<all-runners
 			[runners]="allRunners"></all-runners>
-	</template>	
+	</template>
 
-	<iframe 
+	<stream
+		#scrollMe
 		*ngIf="streamFullUrl"
-		[src]="streamFullUrl | safeResourceUrl"
-        height="720" 
-        width="1280" 
-        frameborder="0" 
-        scrolling="no"
-        allowfullscreen="true">
-    </iframe>
-    <iframe
-    	*ngIf="chatFullUrl"
-    	frameborder="0" 
-        scrolling="no" 
-        id="chat_embed" 
-        [src]="chatFullUrl | safeResourceUrl" 
-        height="500" 
-        width="1280">
-	</iframe>
-
-	<!--<section class="stream">
-		<stream></stream>
-	</section>-->
+		[streamUrl]="streamFullUrl"></stream>
 	`,
 	styleUrls: ['home.component.scss', 'runners.scss']
 })
 export class HomeNewComponent implements OnInit {
+	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
 	streamFullUrl: string;
 	chatFullUrl: string;
 	allRunners: any[] = [];
@@ -80,6 +65,12 @@ export class HomeNewComponent implements OnInit {
 
 		this.runnersService.onlineRunnersUpdated
 			.subscribe( (x: any) => this.onlineRunners = x );
+
+		this.runnersService.streamUpdated
+			.subscribe( (url: string) => {
+				this.streamFullUrl = url;
+				this.scrollToBottom();
+			});
 		
 		//Search for the two queries
 		//We won't use the query 'speedrun' or 'speedrunners', because there is a game called 'Speedrunners'
@@ -110,4 +101,14 @@ export class HomeNewComponent implements OnInit {
 
 		return transformedStreams;
 	}
+
+	scrollToBottom(): void {
+        try {
+        	console.log(this.myScrollContainer.nativeElement.scrollTop);
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+            console.log(this.myScrollContainer.nativeElement.scrollTop);
+        } catch(err) {
+        	console.log("ERROR", err);
+        }                 
+    }
 }

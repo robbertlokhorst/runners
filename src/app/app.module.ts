@@ -13,6 +13,7 @@ import { IntroComponent } from './intro.component';
 import { StreamsGridComponent } from './streams-grid.component';
 import { StreamRunnerComponent } from './stream-runner.component';
 import { AllRunnersComponent } from './all-runners.component';
+import { StreamComponent } from './stream.component';
 
 import { SpeedrunService } from './speedrun.service';
 import { TwitchService } from './twitch.service';
@@ -34,6 +35,7 @@ import { MailtoPipe } from './mailto.pipe';
     StreamsGridComponent,
     StreamRunnerComponent,
     AllRunnersComponent,
+    StreamComponent,
     SafeResourceUrlPipe,
     SafeStylePipe,
     MailtoPipe,

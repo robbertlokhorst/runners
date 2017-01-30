@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { RunnersService } from './runners.service';
+
 @Component({
 	selector: 'stream-runner',
 	template: `
@@ -14,11 +16,11 @@ import { Component, OnInit, Input } from '@angular/core';
 			[src]="runner.stream.preview.medium | safeResourceUrl"
 			alt=""
 			class="runner-stream__image"
-			(click)="setStream(runner.name)" />
+			(click)="changeStream(runner.name)" />
 		<div class="runner-stream__info">
 			<h3
 				class="runner-stream__name"
-				(click)="setStream(runner.name)">
+				(click)="changeStream(runner.name)">
 				{{ runner.name }}
 			</h3>
 			<span class="runner-stream__viewers">
@@ -46,7 +48,7 @@ export class StreamRunnerComponent implements OnInit {
 	liveClass: Boolean = false;
 	featuredClass: Boolean = false;
 
-	constructor() {}
+	constructor(private runnersService: RunnersService) {}
 
 	ngOnInit(): void {
 		switch(this.streamsType){
@@ -63,9 +65,7 @@ export class StreamRunnerComponent implements OnInit {
 		}		
 	}
 
-	private setStream(username: string){
-		//set the Twitch stream iframe
-		//this.streamFullUrl = "http://player.twitch.tv/?channel=" + username;
-		//this.chatFullUrl = "http://www.twitch.tv/" + username + "/chat";
+	private changeStream(username: string){
+		this.runnersService.setStream(username);
 	}
 }

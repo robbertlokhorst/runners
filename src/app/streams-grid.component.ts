@@ -6,6 +6,7 @@ import { StreamRunnerComponent } from './stream-runner.component';
 	selector: 'streams-grid',
 	template: `
 	<div
+		[@shrinkInOut]="'in'"
 		class="runners"
 		[ngClass]="{
 			'runners--live': liveClass,
@@ -33,6 +34,17 @@ import { StreamRunnerComponent } from './stream-runner.component';
 	`,
 	styleUrls: ['runners.scss'],
 	animations: [
+		trigger('shrinkInOut', [
+			state('in', style({height: '*'})),
+			transition('void => *', [
+				style({height: 0}),
+				animate(150, style({height: '*'}))
+			]),
+			transition('* => void', [
+				style({height: '*'}),
+				animate(150, style({height: 0}))
+			])
+		]),
 		trigger('flyInOut', [
 			state('in',
 				style({
@@ -44,10 +56,10 @@ import { StreamRunnerComponent } from './stream-runner.component';
 					transform: 'translateY(-10%)',
 					opacity: '0',
 				}),
-				animate(100)
+				animate(150)
 			]),
 			transition('* => void', [
-				animate(100, style({
+				animate(150, style({
 					transform: 'translateY(10%)',
 					opacity: '0'
 				}))

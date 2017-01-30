@@ -1,19 +1,5 @@
 .container {
-	margin-right: auto;
-	margin-left: auto;
-	padding-left: 25px;
-	padding-right: 25px;
-	max-width: 895px;
-
-	&--fluid{
-		max-width:100%;
-	}
-
-	&:before, &:after{
-		clear: both;
-		content: " ";
-  		display: table;
-	}
+	@extend %container;
 }
 
 .row {
