@@ -12,9 +12,12 @@ I’d like to shine a light on the runners. Give them the attention they deserve
 
 ## To do
 
-- Show stream in a nice way;
+- ~~Show stream in a nice way;~~
+- Show chat(?);
+- Join featured stream queries;
+- Don't load featured runners when searching for runners;
 - Remove old files;
 - Filter double players;
-- Add header and footer;
+- ~~Add header and footer;~~
 - Animations;
 - Put this bad boy online.
