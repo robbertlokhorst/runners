@@ -69,6 +69,15 @@
         max-width:100%;
         height:auto;
         cursor:pointer;
+        transition: all 200ms ease-in-out 500ms;
+        opacity: 0;
+        transform:scale(.9);
+        position:absolute;
+
+        &--loaded{
+            opacity: 1;
+            transform:scale(1);
+        }
     }
 
     &__info{
@@ -98,10 +107,35 @@
         line-height: 1.5;
         margin: .125rem auto 0;
     }
+    &__loader{
+        width: 100%;
+        padding-bottom: 56.25%;
+        position: relative;
+        border:1px solid $black;
+        transition:border-width 200ms ease-in-out 200ms;
+
+        &--loaded{
+            border-width:0px;
+        }
+        &--live{
+            border-color:$white;
+
+            .loader{
+                color: $white;
+            }
+        }
+        &--featured{
+            border-color:$blue;
+
+            .loader{
+                color: $blue;
+            }
+        }
+    }
     
     //Change the color from black to white if streamer is live
     //Background will be $main
     &--live{
-        color:$white;
+        color:$white;        
     }
 }

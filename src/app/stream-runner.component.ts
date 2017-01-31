@@ -11,12 +11,27 @@ import { RunnersService } from './runners.service';
 			'runner-stream--live': liveClass,
 			'runner-stream--featured': featuredClass
 		}">
-		<img
-			*ngIf="runner.stream?.preview?.medium"
-			[src]="runner.stream.preview.medium | safeResourceUrl"
-			alt=""
-			class="runner-stream__image"
-			(click)="changeStream(runner.name)" />
+		<div
+			[ngClass]="{
+				'runner-stream__loader--loaded': !showLoader,
+				'runner-stream__loader--live': liveClass,
+				'runner-stream__loader--featured': featuredClass
+			}"
+			class="runner-stream__loader">
+			<div class="loader"></div>
+
+			<img
+				[ngClass]="{
+					'runner-stream__image--loaded': !showLoader
+				}"
+				*ngIf="runner.stream?.preview?.medium"
+				[src]="runner.stream.preview.medium | safeResourceUrl"
+				(load)="toggleLoader()"
+				alt=""
+				class="runner-stream__image"
+				(click)="changeStream(runner.name)" />
+		</div>
+		
 		<div class="runner-stream__info">
 			<h3
 				class="runner-stream__name"
@@ -39,18 +54,21 @@ import { RunnersService } from './runners.service';
 		</div>
 	</article>
 	`,
-	styleUrls: ['runners.scss'],	
+	styleUrls: ['runners.scss', 'loader.scss'],	
 })
 
 export class StreamRunnerComponent implements OnInit {
 	@Input() runner: any;
 	@Input() streamsType: any;
+
 	liveClass: Boolean = false;
 	featuredClass: Boolean = false;
+	showLoader: Boolean = true;
 
 	constructor(private runnersService: RunnersService) {}
 
 	ngOnInit(): void {
+
 		switch(this.streamsType){
 			case "live":
 				this.liveClass = true;
@@ -63,6 +81,10 @@ export class StreamRunnerComponent implements OnInit {
 			default:				
 				//Default case
 		}		
+	}
+
+	private toggleLoader(){
+		this.showLoader = !this.showLoader;
 	}
 
 	private changeStream(username: string){
