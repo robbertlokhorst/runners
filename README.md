@@ -14,8 +14,9 @@ I’d like to shine a light on the runners. Give them the attention they deserve
 
 - ~~Show stream in a nice way;~~
 - Show chat(?);
-- Join featured stream queries;
-- Don't load featured runners when searching for runners;
+- ~~Join featured stream queries;~~
+- ~~Don't load featured runners when searching for runners;~~
+- Include games from series in list (e.g. "Halo 2");
 - Remove old files;
 - Filter double players;
 - ~~Add header and footer;~~
