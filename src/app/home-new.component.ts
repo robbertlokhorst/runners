@@ -17,26 +17,26 @@ import { Observable } from 'rxjs/Observable';
 	<header class="hero">
 		<div class="container">
 			<intro></intro>
-			<search-games></search-games>
+			<search-games
+				(notifySearchState)="getSearchState($event)"></search-games>
 		</div>
 	</header>
 	
-	<template [ngIf]="!onlineRunners.length && !allRunners.length && featuredRunners && featuredRunners.length > 0">
+	<template [ngIf]="!onlineRunners.length && !allRunners.length && featuredRunners && featuredRunners.length > 0 && !isSearching">
 		<streams-grid
 			[streamsType]="'featured'"
 			[runners]="featuredRunners"></streams-grid>
 	</template>
 
-	<template [ngIf]="onlineRunners && onlineRunners.length > 0">
-		<streams-grid
-			[streamsType]="'live'"
-			[runners]="onlineRunners"></streams-grid>
-	</template>
+	<streams-grid
+		*ngIf="onlineRunners && onlineRunners.length > 0"
+
+		[streamsType]="'live'"
+		[runners]="onlineRunners"></streams-grid>
 	
-	<template [ngIf]="allRunners && allRunners.length > 0">
-		<all-runners
-			[runners]="allRunners"></all-runners>
-	</template>
+	<all-runners
+		*ngIf="allRunners && allRunners.length > 0"
+		[runners]="allRunners"></all-runners>
 
 	<stream
 		*ngIf="streamFullUrl"
@@ -50,6 +50,7 @@ export class HomeNewComponent implements OnInit {
 	allRunners: any[] = [];
 	onlineRunners: any[] = [];
 	featuredRunners: any[] = [];
+	isSearching: Boolean = false;
 
 	constructor(
 		private speedrunService: SpeedrunService,
@@ -68,18 +69,18 @@ export class HomeNewComponent implements OnInit {
 				this.streamFullUrl = url;
 			});
 		
-		//Search for the two queries
+		//Search for the 'speedruns' query
 		//We won't use the query 'speedrun' or 'speedrunners', because there is a game called 'Speedrunners'
-		let speedrunningStreams = this.twitchService.getSearch("speedrunning", 6);
 		let speedrunnersStreams = this.twitchService.getSearch("speedruns", 6);
-		
-		//Merge the two data streams together and subscribe to them
-		//Not yet working exactly like it should
-		speedrunningStreams.merge(speedrunnersStreams)
-            .subscribe((x: any) => {
-            	console.log("x", x);
-            	return this.featuredRunners = this.transformStream(x);
-            });
+
+		speedrunnersStreams.subscribe((x: any) => {
+        	return this.featuredRunners = this.transformStream(x);
+        });
+	}
+
+	//Get search state from EventEmmitter './search-games.component.ts'
+	public getSearchState(evt: any){
+		this.isSearching = evt;
 	}
 
 	private transformStream(obj: any){

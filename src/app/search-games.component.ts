@@ -56,6 +56,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class SearchGamesComponent implements OnInit{
 	// This is an output component that tells the rest of the world that the user has entered a valid text
 	@Output() searchChangeEmitter: EventEmitter<any> = new EventEmitter<any>(); 
+	@Output() notifySearchState: EventEmitter<any> = new EventEmitter();    
 
 	searchBoxValue: string = "";
 	games: any;
@@ -71,7 +72,7 @@ export class SearchGamesComponent implements OnInit{
 	        .debounceTime(300)
 	        .distinctUntilChanged()
 	        .subscribe(q => {
-	        	//Input changed
+	        	//Input changed	        	
 	        	//Get the games list
 	        	this.speedrunService.getGames(q)
 	        		.subscribe( (games: any) => {
@@ -79,6 +80,10 @@ export class SearchGamesComponent implements OnInit{
 	        		});
 	        });
 	}
+
+	private sendNotification(bool: any) {
+        this.notifySearchState.emit(bool);
+    }
 
 	public toggleGamesListState(){		
 		//Change it the other way around because we'll set the gamesList after this
@@ -108,6 +113,10 @@ export class SearchGamesComponent implements OnInit{
 	}
 
 	private infoGame(game: any){
+		//Time to search
+		//Don't show featured runners while we're searching
+	    this.sendNotification(true);
+
 		//Reset speedrunners arrays
 		//We don't want to show results of the old game
     	this.runnersService.resetRunners();
@@ -121,7 +130,7 @@ export class SearchGamesComponent implements OnInit{
 
 		this.speedrunService.getRuns(gameId, 100)
 			.subscribe( (runs: any) => {
-				let users = runs.data.map( (run: any ) => run.players[0].id );				
+				let users = runs.data.map( (run: any ) => run.players[0].id );							
 
 				for(let i = 0; i < users.length; i++){
 					this.speedrunService.getUser(users[i])
@@ -142,6 +151,9 @@ export class SearchGamesComponent implements OnInit{
 						});						
 				}
 			});
+
+		//Now it's okay
+		this.sendNotification(false);
 	}
 
 	private getLiveRunners(twitchUrl: string, userData: any){

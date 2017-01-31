@@ -4,10 +4,17 @@
     border-bottom:2px solid $blue;
     padding-top:22px;
     padding-bottom:20px;
-    color:$blue;    
+    color:$blue;
 
     &__title{
         margin: 0 auto 16px;
+
+        span{
+            font-weight:$fw-light;
+            font-size: .6rem;
+            opacity: .5;
+            margin-left: .6rem;
+        }
     }
 
     &__list{
@@ -27,6 +34,10 @@
         text-transform:uppercase;
         margin-right:15px;
         margin-bottom:12px;
+
+        a{
+            text-decoration: none;
+        }
 
         &:after{
             content:"";

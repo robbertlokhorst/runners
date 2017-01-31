@@ -5,11 +5,11 @@ import { Component, Input, trigger, state, style, transition, animate } from '@a
 	template: `
 	<div class="runners">
 		<div class="container">
-			<h2 class="small-title runners__title">All runners</h2>
+			<h2 class="small-title runners__title">All runners <span>Opens Twitch profile in new tab</span></h2>
 
 			<ul class="runners__list">
 				<li [@showUp]="'shown'" class="runners__list-item" *ngFor="let runner of runners">
-					{{ runner.name }}
+					<a [href]="runner.twitch.uri | safeUrl" target="_blank">{{ runner.name }}</a>
 				</li>
 			</ul>
 		</div>
