@@ -18,6 +18,7 @@ import { StreamComponent } from './stream.component';
 import { SpeedrunService } from './speedrun.service';
 import { TwitchService } from './twitch.service';
 import { RunnersService } from './runners.service';
+import { WindowRefService } from './window-ref.service';
 
 import { SafeResourceUrlPipe } from './safe-resource-url.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
@@ -57,6 +58,7 @@ import { MailtoPipe } from './mailto.pipe';
     SpeedrunService,
     TwitchService,
     RunnersService,
+    WindowRefService
   ],
   bootstrap: [AppComponent]
 })

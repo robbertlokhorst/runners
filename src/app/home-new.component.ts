@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { SearchGamesComponent } from './search-games.component';
@@ -39,15 +39,12 @@ import { Observable } from 'rxjs/Observable';
 	</template>
 
 	<stream
-		#scrollMe
 		*ngIf="streamFullUrl"
 		[streamUrl]="streamFullUrl"></stream>
 	`,
 	styleUrls: ['home.component.scss', 'runners.scss']
 })
 export class HomeNewComponent implements OnInit {
-	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
-
 	streamFullUrl: string;
 	chatFullUrl: string;
 	allRunners: any[] = [];
@@ -69,7 +66,6 @@ export class HomeNewComponent implements OnInit {
 		this.runnersService.streamUpdated
 			.subscribe( (url: string) => {
 				this.streamFullUrl = url;
-				this.scrollToBottom();
 			});
 		
 		//Search for the two queries
@@ -100,15 +96,5 @@ export class HomeNewComponent implements OnInit {
 		}
 
 		return transformedStreams;
-	}
-
-	scrollToBottom(): void {
-        try {
-        	console.log(this.myScrollContainer.nativeElement.scrollTop);
-            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-            console.log(this.myScrollContainer.nativeElement.scrollTop);
-        } catch(err) {
-        	console.log("ERROR", err);
-        }                 
-    }
+	}	
 }
