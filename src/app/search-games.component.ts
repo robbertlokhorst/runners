@@ -100,16 +100,19 @@ export class SearchGamesComponent implements OnInit{
 	    this.searchUpdated.next(value); // Emit the event to all listeners that signed up - we will sign up in our contractor
 	}
 
-	//Check if two objects are the same
-	private containObject(obj: any, list: any) {
-	    for (let i = 0; i < list.length; i++) {
-	    	//Using JSON.stringify because JavaScript is weird
-	        if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
-	            return true;
-	        }
-	    }
+	//Check if name already exists in shown list
+	private checkExists(userData: any, list: any){
+		if (!userData.hasOwnProperty('name'))
+			return false;
 
-	    return false;
+		let name = userData.name;
+
+		for (let i = 0; i < list.length; i++) {
+			if (list[i].name === name)
+				return false;
+		}
+
+		return true;
 	}
 
 	private infoGame(game: any){
@@ -142,7 +145,8 @@ export class SearchGamesComponent implements OnInit{
 							}
 
 							//If userData isn't in the array
-							if( !this.containObject(userData, this.runnersService.getAllRunners()) && userData.twitch != null ){
+							//if( !this.containObject(userData, this.runnersService.getAllRunners()) && userData.twitch != null ){
+							if (this.checkExists(userData, this.runnersService.getAllRunners()) && userData.twitch != null) {
 								//Add it to the array
 								this.getLiveRunners(userData.twitch.uri, userData);
 								//runnersService.offlineRunners.push(userData);
