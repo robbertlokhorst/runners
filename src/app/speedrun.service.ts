@@ -10,11 +10,14 @@ export class SpeedrunService {
 
     constructor(private _jsonp: Jsonp){ }
     
-    getGames(query: any) {
- 
+    getByType(type: string, query: any) {
         return this._jsonp
-            .get(this._speedrun_url + '/games?name=' + query + '&callback=JSONP_CALLBACK')
+            .get(this._speedrun_url + '/' + type + '?name=' + query + '&callback=JSONP_CALLBACK')
             .map(res => res.json());
+    }
+
+    getGames(query: any) {
+        return this.getByType("games", query);
     }
 
     getRuns(id: string, limit: Number = 10) {
