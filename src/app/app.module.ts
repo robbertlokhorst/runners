@@ -5,7 +5,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeNewComponent } from './home-new.component';
+import { HomeComponent } from './home.component';
 import { HeaderComponent } from './header.component';
 import { FooterComponent } from './footer.component';
 import { SearchGamesComponent } from './search-games.component';
@@ -28,7 +28,7 @@ import { MailtoPipe } from './mailto.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeNewComponent,
+    HomeComponent,
     HeaderComponent,
     FooterComponent,
     SearchGamesComponent,
@@ -50,7 +50,7 @@ import { MailtoPipe } from './mailto.pipe';
     RouterModule.forRoot([
       {
         path: '',
-        component: HomeNewComponent,
+        component: HomeComponent,
       }
     ])
   ],
