@@ -21,4 +21,4 @@ I’d like to shine a light on the runners. Give them the attention they deserve
 - ~~Filter double players;~~
 - ~~Add header and footer;~~
 - Animations;
-- Put this bad boy online.
+- ~~Put this bad boy online~~ http://robbertlokhorst.nl/twitch-speedrun/
