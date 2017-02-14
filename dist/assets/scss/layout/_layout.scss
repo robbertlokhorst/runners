@@ -1,0 +1,28 @@
+.flex-row{
+	display:flex;
+	flex-direction: row;
+	align-items:stretch;
+	flex-wrap:wrap;
+	margin-left:-25px;
+	margin-right:-25px;
+
+	&__col{
+		padding-left:25px;
+		padding-right:25px;
+	}
+}
+
+.content{
+	>*:first-child{
+		margin-top:0;
+	}
+	>*:last-child{
+		margin-bottom:0;
+	}
+}
+
+hr{
+	border:none;
+	border-bottom:1px solid $black;
+	margin:1rem auto;
+}

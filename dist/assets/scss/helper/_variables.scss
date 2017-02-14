@@ -1,0 +1,104 @@
+//Font-families
+$font-stack: 'Nunito', sans-serif;;
+
+//Font-sizes
+$fs-normal: 16px;
+
+//Colors
+$white: #f7fced;
+$black: rgba(26,13,28,1);
+$main: #ff2a52;
+$blue: #1a19c3;
+
+//Font-weights
+$fw-light: 300;
+$fw-normal: 700;
+$fw-bold: 900;
+
+%btn{
+	text-decoration: none;
+	padding: 3px 8px;
+	background-color: $black;
+	color: $white;
+	display: inline-block;
+	border:none;
+
+	&+%btn{
+		margin-top:15px;
+	}
+
+	&:hover, &:focus{
+		text-decoration:underline;
+	}
+}
+
+%no-margin-top{
+	margin-top:0;
+}
+%no-margin-bottom{
+	margin-bottom:0;
+}
+%no-margin-left{
+	margin-left:0;
+}
+%no-margin-right{
+	margin-right:0;
+}
+%md-margin-top{
+	margin-top:15px;
+}
+%md-margin-bottom{
+	margin-bottom:15px;
+}
+%lg-margin-top{
+	margin-top:30px;
+
+	@media (max-width: 767px) {
+		margin-top:15px;
+	}
+}
+%lg-margin-bottom{
+	margin-bottom:30px;
+
+	@media (max-width: 767px) {
+		margin-bottom:15px;
+	}
+}
+
+%container {
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	max-width: 895px;
+
+	&:before, &:after{
+		clear: both;
+		content: " ";
+  		display: table;
+	}
+}
+
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
